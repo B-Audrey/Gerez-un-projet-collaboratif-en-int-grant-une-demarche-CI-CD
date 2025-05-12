@@ -1,7 +1,7 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 
-on: [push]
+on: [ push ]
 
 jobs:
   test-front:
@@ -25,6 +25,9 @@ jobs:
           sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
+
+      - name: move to frontend directory
+        run: cd frontend
 
       - name: Install dependencies
         run: npm install
