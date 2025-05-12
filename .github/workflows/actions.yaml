@@ -27,7 +27,7 @@ jobs:
           sudo apt-get install -y google-chrome-stable
 
       - name: move to frontend directory
-        run: cd frontend
+        run: cd front
 
       - name: Install dependencies
         run: npm install
