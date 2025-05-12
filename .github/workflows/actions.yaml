@@ -57,7 +57,7 @@ jobs:
         with:
           name: Angular Tests
           path: front/reports/karma-test-results.xml
-          reporter: jest-junit
+          reporter: java-junit
 
       - name: Show report URL
         run: |
