@@ -43,9 +43,6 @@ jobs:
           name: coverage-report-frontend
           path: front/coverage/
 
-      - name: List files
-        run: ls ${{ github.workspace }}
-
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
   test-back:
@@ -70,9 +67,11 @@ jobs:
         working-directory: back
         run: mvn clean test
 
-      - name: Archive test reports (optional)
+      - name: Archive test reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: junit-report-backend
           path: back/target/surefire-reports/
+
+      - run: echo "🍏 This job's status is ${{ job.status }}."
