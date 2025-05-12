@@ -39,6 +39,7 @@ module.exports = function (config) {
       outputDir: 'reports',
       outputFile: 'karma-test-results.xml',
       useBrowserName: false,
+      suite: '',
     },
     port: 9876,
     colors: true,

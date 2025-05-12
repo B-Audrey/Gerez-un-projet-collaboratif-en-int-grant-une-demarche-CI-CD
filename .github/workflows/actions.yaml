@@ -37,7 +37,7 @@ jobs:
 
 
       - name: Run tests
-        run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
+        run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage --reporters=junit
 
       - name: Archive coverage report
         if: always()
