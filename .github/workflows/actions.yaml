@@ -8,7 +8,7 @@ jobs:
     name: Run front test job
     runs-on: ubuntu-latest
     defaults:
-      run :
+      run:
         shell: bash
         working-directory: front
 
@@ -23,7 +23,6 @@ jobs:
 
       - name: Install Chrome
         run: |
-          sudo apt-get update
           sudo apt-get install -y wget gnupg2
           wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
           sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
@@ -35,9 +34,45 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
+        run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
+
+      - name: Archive coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-frontend
+          path: front/coverage/
 
       - name: List files
         run: ls ${{ github.workspace }}
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
+
+  test-back:
+    name: Run back test job
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: back
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Build and test with Maven
+        working-directory: back
+        run: mvn clean test
+
+      - name: Archive test reports (optional)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-report-backend
+          path: back/target/surefire-reports/
