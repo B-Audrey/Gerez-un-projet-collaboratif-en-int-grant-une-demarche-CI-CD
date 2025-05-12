@@ -46,6 +46,10 @@ jobs:
           name: coverage-report-frontend
           path: front/coverage/
 
+      - name: Show test report contents (debug)
+        run: |
+          cat front/reports/karma-test-results.xml || echo "⚠️ No report found"
+
       - name: Test Report
         uses: phoenix-actions/test-reporting@v8
         id: front-test-report

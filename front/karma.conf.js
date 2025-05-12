@@ -39,6 +39,8 @@ module.exports = function (config) {
       outputDir: 'reports',
       outputFile: 'karma-test-results.xml',
       useBrowserName: false,
+      suite: '', // ajoute ce champ si ce n'est pas fait
+      suiteNameTemplate: '{suite}', // 👈 force l'encapsulation dans <testsuites>
     },
     port: 9876,
     colors: true,
