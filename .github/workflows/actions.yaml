@@ -36,12 +36,18 @@ jobs:
       - name: Run tests
         run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
 
-      - name: Archive coverage report
+      - name: Test Report
+        uses: phoenix-actions/test-reporting@v8
+        id: front-test-report
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: coverage-report-frontend
-          path: front/coverage/
+          name: Frontend Tests
+          path: front/reports/karma-test-results.xml
+          reporter: jest-junit
+
+      - name: Show report URL
+        run: |
+          echo "front url is ${{ steps.test-report.outputs.runHtmlUrl }}"
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
@@ -78,6 +84,6 @@ jobs:
 
       - name: Read output variables
         run: |
-          echo "url is ${{ steps.test-report.outputs.runHtmlUrl }}"
+          echo "back url is ${{ steps.test-report.outputs.runHtmlUrl }}"
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
