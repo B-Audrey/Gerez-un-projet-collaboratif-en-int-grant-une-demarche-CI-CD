@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: Testing GitHub Actions
 run-name: ${{ github.actor }} is testing 🚀
 
 on: [ push ]
@@ -39,12 +39,18 @@ jobs:
       - name: Run tests
         run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage --reporters=junit
 
+      - name: List coverage files
+        run: ls -R front/coverage/bobapp || echo "No coverage report found"
+
+
+
       - name: Archive coverage report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report-frontend
-          path: front/coverage/
+          path: front/coverage/bobapp/
+
 
       - name: Show test report contents (debug)
         run: |
@@ -99,6 +105,14 @@ jobs:
           name: Java Tests
           path: back/target/surefire-reports/*.xml
           reporter: java-junit
+
+      - name: Archive back coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-backend
+          path: back/target/site/jacoco/
+
 
       - name: Read output variables
         run: |
