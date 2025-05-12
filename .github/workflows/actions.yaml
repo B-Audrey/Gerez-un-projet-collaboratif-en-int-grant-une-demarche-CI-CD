@@ -31,7 +31,10 @@ jobs:
 
       - name: Install dependencies
         working-directory: front
-        run: npm ci
+        run: |
+          npm ci     
+          npm install --save-dev karma-junit-reporter
+
 
       - name: Run tests
         run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
