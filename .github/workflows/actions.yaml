@@ -7,6 +7,10 @@ jobs:
   test-front:
     name: Run front test job
     runs-on: ubuntu-latest
+    defaults:
+      run :
+        shell: bash
+        working-directory: front
 
     steps:
       - name: Check out repository code
@@ -27,11 +31,10 @@ jobs:
           sudo apt-get install -y google-chrome-stable
 
       - name: Install dependencies
-        run: cd front |
-          npm install
+        working-directory: front
+        run: npm ci
 
       - name: Run tests
-        working-directory: front
         run: npm run test -- --watch=false --browsers=ChromeHeadless
 
       - name: List files
