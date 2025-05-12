@@ -67,11 +67,17 @@ jobs:
         working-directory: back
         run: mvn clean test
 
-      - name: Archive test reports
-        if: always()
-        uses: actions/upload-artifact@v4
+      - name: Test Report
+        uses: phoenix-actions/test-reporting@v8
+        id: test-report               # Set ID reference for step
+        if: always()    # run this step even if previous step failed
         with:
-          name: junit-report-backend
-          path: back/target/surefire-reports/
+            name: JEST Tests            # Name of the check run which will be created
+            path: reports/jest-*.xml    # Path to test results
+            reporter: jest-junit        # Format of test results
+
+      - name: Read output variables
+        run: |
+          echo "url is ${{ steps.test-report.outputs.runHtmlUrl }}"
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
