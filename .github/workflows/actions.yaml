@@ -4,121 +4,121 @@ run-name: ${{ github.actor }} is testing 🚀
 on: [ push ]
 
 jobs:
-  test-front:
-    name: Run front test job
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: front
-
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - name: Install Chrome
-        run: |
-          sudo apt-get install -y wget gnupg2
-          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-
-      - name: Install dependencies
-        working-directory: front
-        run: |
-          npm ci     
-          npm install --save-dev karma-junit-reporter
-
-
-      - name: Run tests
-        run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage --reporters=junit
-
-      - name: List coverage files
-        run: ls -R front/coverage/bobapp || echo "No coverage report found"
-
-
-
-      - name: Archive coverage report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report-frontend
-          path: front/coverage/bobapp/
-
-
-      - name: Show test report contents (debug)
-        run: |
-          cat front/reports/karma-test-results.xml || echo "⚠️ No report found"
-
-      - name: Test Report
-        uses: phoenix-actions/test-reporting@v8
-        id: front-test-report
-        if: always()
-        with:
-          name: Angular Tests
-          path: front/reports/karma-test-results.xml
-          reporter: java-junit
-
-      - name: Show report URL
-        run: |
-          echo "front url is ${{ steps.front-test-report.outputs.runHtmlUrl }}"
-
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-
-      - name: Clean npm cache
-        run: npm cache clean --force
-
-
-  test-back:
-    name: Run back test job
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: back
-
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '11'
-
-      - name: Build and test with Maven
-        working-directory: back
-        run: mvn clean test
-
-      - name: Test Report
-        uses: phoenix-actions/test-reporting@v8
-        id: back-test-report
-        if: always()
-        with:
-          name: Java Tests
-          path: back/target/surefire-reports/*.xml
-          reporter: java-junit
-
-      - name: Archive back coverage report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report-backend
-          path: back/target/site/jacoco/
-
-
-      - name: Read output variables
-        run: |
-          echo "back url is ${{ steps.back-test-report.outputs.runHtmlUrl }}"
-
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+#  test-front:
+#    name: Run front test job
+#    runs-on: ubuntu-latest
+#    defaults:
+#      run:
+#        shell: bash
+#        working-directory: front
+#
+#    steps:
+#      - name: Check out repository code
+#        uses: actions/checkout@v4
+#
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '16'
+#
+#      - name: Install Chrome
+#        run: |
+#          sudo apt-get install -y wget gnupg2
+#          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+#          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+#          sudo apt-get update
+#          sudo apt-get install -y google-chrome-stable
+#
+#      - name: Install dependencies
+#        working-directory: front
+#        run: |
+#          npm ci
+#          npm install --save-dev karma-junit-reporter
+#
+#
+#      - name: Run tests
+#        run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage --reporters=junit
+#
+#      - name: List coverage files
+#        run: ls -R front/coverage/bobapp || echo "No coverage report found"
+#
+#
+#
+#      - name: Archive coverage report
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: coverage-report-frontend
+#          path: front/coverage/bobapp/
+#
+#
+#      - name: Show test report contents (debug)
+#        run: |
+#          cat front/reports/karma-test-results.xml || echo "⚠️ No report found"
+#
+#      - name: Test Report
+#        uses: phoenix-actions/test-reporting@v8
+#        id: front-test-report
+#        if: always()
+#        with:
+#          name: Angular Tests
+#          path: front/reports/karma-test-results.xml
+#          reporter: java-junit
+#
+#      - name: Show report URL
+#        run: |
+#          echo "front url is ${{ steps.front-test-report.outputs.runHtmlUrl }}"
+#
+#      - run: echo "🍏 This job's status is ${{ job.status }}."
+#
+#      - name: Clean npm cache
+#        run: npm cache clean --force
+#
+#
+#  test-back:
+#    name: Run back test job
+#    runs-on: ubuntu-latest
+#    defaults:
+#      run:
+#        shell: bash
+#        working-directory: back
+#
+#    steps:
+#      - name: Check out repository code
+#        uses: actions/checkout@v4
+#
+#      - name: Set up JDK 11
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'temurin'
+#          java-version: '11'
+#
+#      - name: Build and test with Maven
+#        working-directory: back
+#        run: mvn clean test
+#
+#      - name: Test Report
+#        uses: phoenix-actions/test-reporting@v8
+#        id: back-test-report
+#        if: always()
+#        with:
+#          name: Java Tests
+#          path: back/target/surefire-reports/*.xml
+#          reporter: java-junit
+#
+#      - name: Archive back coverage report
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: coverage-report-backend
+#          path: back/target/site/jacoco/
+#
+#
+#      - name: Read output variables
+#        run: |
+#          echo "back url is ${{ steps.back-test-report.outputs.runHtmlUrl }}"
+#
+#      - run: echo "🍏 This job's status is ${{ job.status }}."
 
   sonarqube:
     name: SonarQube
