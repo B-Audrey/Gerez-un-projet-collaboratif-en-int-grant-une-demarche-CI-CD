@@ -1,6 +1,7 @@
 name: Testing GitHub Actions
 run-name: ${{ github.actor }} is testing 🚀
 
+# Add pull request !!
 on: [ push ]
 
 jobs:
@@ -35,14 +36,8 @@ jobs:
           npm ci
           npm install --save-dev karma-junit-reporter
 
-
       - name: Run tests
         run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage --reporters=junit
-
-      - name: List coverage files
-        run: ls -R front/coverage/bobapp || echo "No coverage report found"
-
-
 
       - name: Archive coverage report
         if: always()
@@ -50,11 +45,6 @@ jobs:
         with:
           name: coverage-report-frontend
           path: front/coverage/bobapp/
-
-
-      - name: Show test report contents (debug)
-        run: |
-          cat front/reports/karma-test-results.xml || echo "⚠️ No report found"
 
       - name: Test Report
         uses: phoenix-actions/test-reporting@v8
@@ -68,12 +58,7 @@ jobs:
       - name: Show report URL
         run: |
           echo "front url is ${{ steps.front-test-report.outputs.runHtmlUrl }}"
-
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-
-      - name: Clean npm cache
-        run: npm cache clean --force
-
+          echo "🍏 This job's status is ${{ job.status }}."
 
   test-back:
     name: Run back test job
@@ -117,8 +102,7 @@ jobs:
       - name: Read output variables
         run: |
           echo "back url is ${{ steps.back-test-report.outputs.runHtmlUrl }}"
-
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          echo "🍏 This job's status is ${{ job.status }}."
 
   sonarqube:
     name: SonarQube
@@ -132,7 +116,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '11'
 
       - name: Build backend
         run: |
