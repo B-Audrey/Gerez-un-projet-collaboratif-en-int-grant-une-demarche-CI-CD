@@ -160,11 +160,11 @@ jobs:
           context: back
           file: back/Dockerfile
           push: true
-          tags: baudrey/back:${{ github.ref_name }}
+          tags: baudrey/back:${{ github.sha }}
       - name: Build and push front
         uses: docker/build-push-action@v6
         with:
           context: front
           file: front/Dockerfile
           push: true
-          tags: baudrey/front:${{ github.ref_name }}
+          tags: baudrey/front:${{ github.sha }}
