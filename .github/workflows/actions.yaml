@@ -1,8 +1,8 @@
 name: Testing GitHub Actions
 run-name: ${{ github.actor }} is testing 🚀
 
-# Add pull request !!
-on: [ push ]
+# Add de le faire on pull request !!
+on: [ pull_request ]
 
 jobs:
   test-front:
