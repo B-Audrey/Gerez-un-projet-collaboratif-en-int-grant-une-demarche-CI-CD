@@ -157,8 +157,7 @@ jobs:
       - name: Build and push front
         uses: docker/build-push-action@v6
         with:
-          context: ./front
-          file: front/Dockerfile
+          context: "{{defaultContext}}:front"
           push: true
           tags: baudrey/front:${{ github.sha }}
   docker-back:
@@ -176,7 +175,6 @@ jobs:
       - name: Build and push front
         uses: docker/build-push-action@v6
         with:
-          context: ./back
-          file: back/Dockerfile
+          context: "{{defaultContext}}:back"
           push: true
           tags: baudrey/back:${{ github.sha }}
