@@ -144,10 +144,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   docker-front:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: front
     steps:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -161,15 +157,12 @@ jobs:
       - name: Build and push front
         uses: docker/build-push-action@v6
         with:
-          file: Dockerfile
+          context: ./front
+          file: front/Dockerfile
           push: true
           tags: baudrey/front:${{ github.sha }}
   docker-back:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: back
     steps:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -183,6 +176,7 @@ jobs:
       - name: Build and push front
         uses: docker/build-push-action@v6
         with:
-          file: Dockerfile
+          context: ./back
+          file: back/Dockerfile
           push: true
           tags: baudrey/back:${{ github.sha }}
