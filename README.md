@@ -55,3 +55,9 @@ Build the container:
 Start the container:
 
 > docker run -p 8080:8080 --name bobapp-back -d bobapp-back 
+
+
+### CI / CD
+
+The CI/CD is done with GitHub Actions. The workflow is defined in the `.github/workflows/actions.yml` file.
+The workflow is triggered on push and pull request events to the `main` branch. It builds the front-end and back-end applications, runs tests, pass Sonar quality gates, and builds Docker images for both applications.
