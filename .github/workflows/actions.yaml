@@ -148,7 +148,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.branch.name=${{ github.head_ref }}
+            -Dsonar.branch.name=${{ github.head_ref || github.ref_name }}
 
 
   docker-front:
