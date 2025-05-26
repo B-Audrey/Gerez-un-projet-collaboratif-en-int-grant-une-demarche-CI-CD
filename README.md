@@ -1,4 +1,4 @@
-# BobApp 2
+# BobApp
 
 Clone project:
 
