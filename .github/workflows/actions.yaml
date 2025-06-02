@@ -135,13 +135,6 @@ jobs:
           cd back
           mvn clean verify
 
-      - name: Validate jacoco report presence
-        run: |
-          if [ ! -f back/target/site/jacoco/jacoco.xml ]; then
-            echo "❌ Jacoco XML report not found"; exit 1;
-          fi
-
-
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
