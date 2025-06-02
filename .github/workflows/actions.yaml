@@ -168,6 +168,11 @@ jobs:
           name: coverage-report-frontend
           path: front/coverage/
 
+      - name: Check coverage file exists
+        run: |
+          ls -la front/coverage/bobapp/
+          cat front/coverage/bobapp/lcov.info | head -n 20
+
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
@@ -181,6 +186,7 @@ jobs:
             -Dsonar.language=js
             -Dsonar.test.inclusions=**/*.spec.ts
             -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
+            -Sonar.typescript.tsconfigPath=tsconfig.json
             -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/build/**
             -Dsonar.branch.name=${{ github.head_ref || github.ref_name }}
             
