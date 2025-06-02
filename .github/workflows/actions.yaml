@@ -179,7 +179,6 @@ jobs:
             -Dsonar.organization=b-audrey
             -Dsonar.sources=.
             -Dsonar.language=js
-            -Dsonar.tests=src/test
             -Dsonar.test.inclusions=**/*.spec.ts
             -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
             -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/build/**
