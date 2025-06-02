@@ -135,12 +135,6 @@ jobs:
           cd back
           mvn clean compile
 
-      - name: Install SonarScanner
-        run: |
-          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-          unzip sonar-scanner.zip -d $HOME
-          echo "$HOME/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
-
       - name: Sonar Scan Back
         run: |
           cd back
@@ -153,6 +147,14 @@ jobs:
         with:
           projectBaseDir: back
           args: >
+            -Dsonar.projectKey=b-audrey_bobapp-back
+            -Dsonar.organization=b-audrey
+            -Dsonar.sources=.
+            -Dsonar.java.binaries=target/classes
+            -Dsonar.tests=src/test
+            -Dsonar.test.inclusions=**/*Tests.java
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/build/**,**/target/**
             -Dsonar.branch.name=${{ github.head_ref || github.ref_name }}
 
   sonarqube-front:
@@ -171,12 +173,6 @@ jobs:
           name: coverage-report-frontend
           path: front/coverage/
 
-      - name: Install SonarScanner
-        run: |
-          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-          unzip sonar-scanner.zip -d $HOME
-          echo "$HOME/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
-
       - name: Sonar Scan Front
         run: |
           cd front
@@ -193,6 +189,8 @@ jobs:
             -Dsonar.organization=b-audrey
             -Dsonar.sources=.
             -Dsonar.language=js
+            -Dsonar.tests=src/test
+            -Dsonar.test.inclusions=**/*.spec.ts
             -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
             -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/build/**
             -Dsonar.branch.name=${{ github.head_ref || github.ref_name }}
