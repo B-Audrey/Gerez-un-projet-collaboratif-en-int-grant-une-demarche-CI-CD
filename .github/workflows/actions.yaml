@@ -135,11 +135,6 @@ jobs:
           cd back
           mvn clean compile
 
-      - name: Sonar Scan Back
-        run: |
-          cd back
-          sonar-scanner -Dproject.settings=sonar-project.properties
-
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
@@ -172,11 +167,6 @@ jobs:
         with:
           name: coverage-report-frontend
           path: front/coverage/
-
-      - name: Sonar Scan Front
-        run: |
-          cd front
-          sonar-scanner -Dproject.settings=sonar-project.properties
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
