@@ -196,7 +196,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     needs:
-      - test-front
       - sonarqube-front
     steps:
       - name: Login to Docker Hub
@@ -216,7 +215,6 @@ jobs:
           tags: baudrey/front:${{ github.sha }}
   docker-back:
     needs:
-      - test-back
       - sonarqube-back
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
