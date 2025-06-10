@@ -50,6 +50,7 @@ jobs:
           npm ci
           npm install --save-dev karma-junit-reporter
 
+      # Build frontend Angular
       - name: Build Angular project
         run: npm run build
 
@@ -100,6 +101,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
+
+      # Build Maven complet
+      - name: Build backend
+        run: mvn clean install
 
       # Lancement des tests Maven
       - name: Build and test with Maven
